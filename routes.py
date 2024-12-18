@@ -38,6 +38,8 @@ def signup():
 
     if success:
         return jsonify({"status": "success", "message": "Signup successful!"})
+    elif success == 'exists':
+        return jsonify({"status": "error", "message": "Account already exists."}), 409
     else:
         return jsonify({"status": "error", "message": "Failed to sign up. Try again."}), 500
 

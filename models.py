@@ -57,14 +57,23 @@ def register_user(name, email, password):
         )
         cursor = conn.cursor()
         
-        # Query to insert the user into the database
-        query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
-        cursor.execute(query, (name, email, hashed_password.decode('utf-8')))  # Store the hashed password as string
-        conn.commit()
-        
-        conn.close()
-        
-        return True
+        #Check if user exists, return false
+        query = "SELECT email FROM users WHERE email = %s"
+        cursor.execute(query, (email,))
+        userExists = cursor.fetchone()
+
+        if userExists:
+            return 'exists'
+        else:
+
+            # Query to insert the user into the database
+            query = "INSERT INTO users (name, email, password) VALUES (%s, %s, %s)"
+            cursor.execute(query, (name, email, hashed_password.decode('utf-8')))  # Store the hashed password as string
+            conn.commit()
+            
+            conn.close()
+            
+            return True
     except Exception as e:
         print("Error: ", e)
         return False
