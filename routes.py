@@ -48,6 +48,10 @@ def signup():
 def send_message():
 
     id = session.get('user_id')
+    
+    if not id:
+        return jsonify({"status": "error", "message": "User not logged in."}), 401
+    
     username = request.form.get('username')
     content = request.form.get('content')
 
