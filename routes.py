@@ -4,6 +4,7 @@ from models import validate_user, register_user
 login_route = Blueprint('login', __name__)
 signup_route = Blueprint('signup', __name__)
 message_route = Blueprint('message', __name__)
+logout_route = Blueprint('logout',__name__)
 
 # Login Route
 @login_route.route('/login', methods=['POST'])
@@ -57,3 +58,11 @@ def message():
         return jsonify({"status": "success", "message": "Message sent to Olivia!"})
     else:
         return jsonify({"status": "error", "message": "Failed to send message. Try again."}), 500
+
+# Logout Route
+@logout_route.route('/logout', methods=['POST'])
+def logout():
+    # Clear the session
+    session.clear()
+    
+    return jsonify({"status": "success", "message": "You have been logged out."})
