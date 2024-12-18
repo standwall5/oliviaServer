@@ -19,6 +19,7 @@ def login():
 
     if user:
         session['user_id'] = user[0] # user[0] is the index of the 'id' field in the database
+        print("Session ID: ", session.get('user_id'))
         return jsonify({"status": "success", "message": "Login successful!"})
     else:
         return jsonify({"status": "error", "message": "Invalid email or password."}), 401
@@ -48,7 +49,7 @@ def signup():
 def send_message():
 
     id = session.get('user_id')
-    
+
     if not id:
         return jsonify({"status": "error", "message": "User not logged in."}), 401
     
