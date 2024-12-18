@@ -36,10 +36,10 @@ def signup():
     # You can add more validation here, like checking if the user already exists
     success = register_user(name, email, password)
 
-    if success:
-        return jsonify({"status": "success", "message": "Signup successful!"})
-    elif success == 'exists':
+    if success == 'exists':
         return jsonify({"status": "error", "message": "Account already exists."}), 409
+    elif success == True:
+        return jsonify({"status": "success", "message": "Signup successful!"})
     else:
         return jsonify({"status": "error", "message": "Failed to sign up. Try again."}), 500
 
