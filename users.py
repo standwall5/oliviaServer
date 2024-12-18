@@ -13,7 +13,7 @@ DB_USER = "olivia"
 DB_PASSWORD = "UQOeX7M9u6BNtKWbfhQ4kUl5txdCQ1gt"
 
 # Route to handle login
-@app.route('/login', methods=['POST'])
+@app.route('/loginpast', methods=['POST'])
 def login():
     email = request.form.get('email')
     password = request.form.get('password')
