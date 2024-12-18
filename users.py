@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify
 import psycopg2
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Database connection details
 DB_HOST = "dpg-ctgh6ergbbvc738q4gh0-a.singapore-postgres.render.com"
