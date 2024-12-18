@@ -30,7 +30,7 @@ def validate_user(email, password):
 
         if user:
             # Assuming the password is in the 3rd column (index 2)
-            stored_password = user[2]  # Index 2 is for the password column in the table
+            stored_password = user[3]  # Index 2 is for the password column in the table
 
             # Check if the entered password matches the hashed password stored in the database
             if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
