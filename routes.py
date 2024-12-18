@@ -41,7 +41,7 @@ def signup():
         return jsonify({"status": "error", "message": "Failed to sign up. Try again."}), 500
 
 # Message Route
-@message_route.route('/message', methods=['GET'])
+@message_route.route('/message', methods=['POST'])
 def message():
 
     id = session.get('user_id')
