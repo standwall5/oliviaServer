@@ -1,0 +1,1 @@
+from users import app  # or 'from master.users import app' if inside a folder
