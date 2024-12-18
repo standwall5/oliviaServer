@@ -21,16 +21,18 @@ def validate_user(email, password):
             password=DB_PASSWORD
         )
         cursor = conn.cursor()
-        query = "SELECT * FROM users WHERE email = %s AND password = %s"
-        cursor.execute(query, (email, password))
+        
+        # Fetch the user record based on the email (do not check password here)
+        query = "SELECT * FROM users WHERE email = %s"
+        cursor.execute(query, (email,))
         user = cursor.fetchone()
         conn.close()
-        
+
         if user:
             # Assuming the password is in the 3rd column (index 2)
             stored_password = user[2]  # Index 2 is for the password column in the table
 
-            # Check if the password entered matches the hashed password in the database
+            # Check if the entered password matches the hashed password stored in the database
             if bcrypt.checkpw(password.encode('utf-8'), stored_password.encode('utf-8')):
                 return user  # Return the whole user record, including the id
             else:
