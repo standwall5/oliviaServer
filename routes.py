@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session
-from models import validate_user, register_user
+from models import validate_user, register_user, add_message, get_messages
 
 login_route = Blueprint('login', __name__)
 signup_route = Blueprint('signup', __name__)
@@ -45,7 +45,7 @@ def signup():
 
 # Message Route
 @message_route.route('/message', methods=['POST'])
-def message():
+def send_message():
 
     id = session.get('user_id')
     username = request.form.get('username')
@@ -54,12 +54,27 @@ def message():
     if not username or not content:
         return jsonify({"status": "success", "message": "Name or message cannot be empty. Please try again."}), 400
     
-    sent = message(id, username, content)
+    sent = add_message(id, username, content)
 
     if sent:
         return jsonify({"status": "success", "message": "Message sent to Olivia!"})
     else:
         return jsonify({"status": "error", "message": "Failed to send message. Try again."}), 500
+
+@message_route.route('/getmessages', methods=['GET'])
+def display_messages():
+    try:
+        messages = get_messages()
+
+        if not messages:  # If no messages found or error occurred
+            return jsonify({"status": "error", "message": "Failed to fetch messages."}), 500
+
+        formatted_messages = [{"username": msg[0], "message": msg[1]} for msg in messages]
+        return jsonify({"status": "success", "data": formatted_messages})
+    
+    except Exception as e:
+        print("Error: ", e)
+        return jsonify({"status": "error", "message": "Failed to fetch messages."}), 500
 
 # Logout Route
 @logout_route.route('/logout', methods=['POST'])

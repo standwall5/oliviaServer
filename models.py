@@ -78,7 +78,7 @@ def register_user(name, email, password):
         print("Error: ", e)
         return False
     
-def message(id, username, content):
+def add_message(id, username, content):
     try:
         conn = psycopg2.connect(
             host=DB_HOST,
@@ -98,3 +98,37 @@ def message(id, username, content):
     except Exception as e:
         print("Error: ", e)
         return False
+    
+def get_messages():
+    try:
+        
+    # # Get query parameters for pagination
+        # page = int(request.args.get('page', 1))  # Default to page 1
+        # per_page = int(request.args.get('per_page', 10))  # Default to 10 messages per page
+        # offset = (page - 1) * per_page
+
+        conn = psycopg2.connect(
+            host=DB_HOST,
+            database=DB_NAME,
+            user=DB_USER,
+            password=DB_PASSWORD
+        )
+        cursor = conn.cursor()
+
+        # Fetch messages with pagination
+        query = """
+        SELECT username, message
+        FROM messages
+        ORDER BY id DESC
+        LIMIT 10
+        """
+        cursor.execute(query)
+        messages = cursor.fetchall()
+        conn.close()
+
+        return messages
+    except Exception as e:
+        print("Error: ", e)
+        return None
+        
+
