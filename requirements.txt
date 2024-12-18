@@ -3,4 +3,4 @@ psycopg2
 gunicorn
 flask_cors
 Flask-Session
-bcrpyt
+bcrypt
