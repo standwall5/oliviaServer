@@ -6,9 +6,13 @@ from models import connect_db
 
 app = Flask(__name__)
 
-CORS(app)
+CORS(app, supports_credentials=True)
 
 app.secret_key = os.urandom(24)
+app.config.update(
+    SESSION_COOKIE_SAMESITE='None',
+    SESSION_COOKIE_SECURE=True  # Set this to True if using HTTPS
+)
 
 # Initialize database connection
 connect_db(app)
