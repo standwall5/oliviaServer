@@ -64,5 +64,5 @@ def message():
 def logout():
     # Clear the session
     session.clear()
-    
+
     return jsonify({"status": "success", "message": "You have been logged out."})
